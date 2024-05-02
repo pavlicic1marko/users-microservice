@@ -11,5 +11,4 @@ urlpatterns = [
     path('users/profile', views.getUserProfile, name='user-profile'),
     path('users', views.getUsers, name='users'),
     path('users/register', views.registerUser, name='register'),
-
 ]
