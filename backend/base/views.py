@@ -1,3 +1,4 @@
+from django.db.backends import sqlite3
 from django.shortcuts import render
 from django.http import JsonResponse
 from .products import products
@@ -8,6 +9,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializer import UserSerializer, UserSerializerWithToken
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import  make_password
+from rest_framework import status
 
 
 
@@ -32,6 +35,26 @@ class MyTokenObtainPairView(TokenObtainPairView):
 def getRoutes(request):
     routes = ['api/products', 'api/products/<id>']
     return Response(routes)
+
+@api_view(['POST'])
+
+def registerUser(request):
+    data = request.data
+
+    try:
+        user = User.objects.create_user(
+            first_name = data['name'],
+            username =  data['email'],
+            email= data['email'],
+            password= make_password(data['password'])
+        )
+        serializer = UserSerializerWithToken(user, many=False)
+        return Response(serializer.data)
+
+    except :
+        message = {'detail':'user with this eamil exists'}
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 @api_view(['GET'])

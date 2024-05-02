@@ -41,7 +41,7 @@ class UserSerializerWithToken(serializers.ModelSerializer): #Used after updating
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
-        return  str(token)
+        return  str(token.access_token)
 
     def get_name(self, obj):
         name = obj.first_name
