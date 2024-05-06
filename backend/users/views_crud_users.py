@@ -4,6 +4,8 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from .serializer import UserSerializer
 from django.contrib.auth.models import User
+import requests
+
 
 
 @api_view(['GET'])
@@ -16,6 +18,15 @@ def getRoutes(request):
 @permission_classes([IsAuthenticated])
 def getProducts(request):
     return Response(products)
+
+@api_view(['GET'])
+def comms(request):
+    URL = "http://127.0.0.1:8000/api/test"
+
+    r = requests.get(url=URL)
+    data = r.json()
+
+    return Response(data)
 
 
 @api_view(['GET'])

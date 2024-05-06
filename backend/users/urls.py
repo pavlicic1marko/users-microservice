@@ -10,4 +10,6 @@ urlpatterns = [
     path('users/profile', views_crud_users.getUserProfile, name='user-profile'),
     path('users', views_crud_users.getUsers, name='users'),
     path('users/register', views_jwt.registerUser, name='register'),
+    path('comms', views_crud_users.comms, name='comms'),
+
 ]
