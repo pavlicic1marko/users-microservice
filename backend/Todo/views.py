@@ -5,7 +5,7 @@ from rest_framework.response import Response
 # Create your views here.
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def getRoutes(request):
     routes= ['api/products','api/products/<id>']
     return Response(routes)
