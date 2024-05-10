@@ -1,3 +1,5 @@
+from rest_framework import status
+
 from .products import products
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -43,6 +45,15 @@ def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+#@permission_classes([IsAdminUser])
+def delUser(request,pk):
+    username=pk
+    user = User.objects.get(username = username)
+    user.delete()
+
+    return Response('user deleted',status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
