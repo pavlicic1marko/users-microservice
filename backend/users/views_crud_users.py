@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from .serializer import UserSerializer
 from django.contrib.auth.models import User
 import requests
+import django.core.exceptions
 
 
 
@@ -50,10 +51,18 @@ def getUsers(request):
 #@permission_classes([IsAdminUser])
 def delUser(request,pk):
     username=pk
-    user = User.objects.get(username = username)
-    user.delete()
+    try:
+        user = User.objects.get(username = username)
+        user.delete()
 
-    return Response('user deleted',status=status.HTTP_200_OK)
+    except django.core.exceptions.ObjectDoesNotExist:
+
+        return Response('user does not exist',status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+
+        return Response(e,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 
 
 @api_view(['GET'])
