@@ -29,7 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
-class UserSerializerWithToken(serializers.ModelSerializer): #Used after updating user information
+class UserSerializerWithToken(UserSerializer): #Used after updating user information
     token = serializers.SerializerMethodField(read_only=True)
     name = serializers.SerializerMethodField(read_only=True)
     _id = serializers.SerializerMethodField(read_only=True)
