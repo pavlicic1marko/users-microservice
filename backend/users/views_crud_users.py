@@ -1,3 +1,5 @@
+from rest_framework import status
+
 from .products import products
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -5,6 +7,7 @@ from rest_framework.response import Response
 from .serializer import UserSerializer
 from django.contrib.auth.models import User
 import requests
+import django.core.exceptions
 
 
 
@@ -43,6 +46,23 @@ def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+#@permission_classes([IsAdminUser])
+def delUser(request,pk):
+    username=pk
+    try:
+        user = User.objects.get(username = username)
+        user.delete()
+
+    except django.core.exceptions.ObjectDoesNotExist:
+
+        return Response('user does not exist',status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+
+        return Response(e,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 
 
 @api_view(['GET'])

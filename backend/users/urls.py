@@ -11,5 +11,6 @@ urlpatterns = [
     path('users', views_crud_users.getUsers, name='users'),
     path('users/register', views_jwt.registerUser, name='register'),
     path('comms', views_crud_users.comms, name='comms'),
+    path('users/delete/<str:pk>', views_crud_users.delUser, name='user-delete-by-id'),
 
 ]
