@@ -54,6 +54,7 @@ def delUser(request,pk):
     try:
         user = User.objects.get(username = username)
         user.delete()
+        return Response('user is deleted', status=200)
 
     except django.core.exceptions.ObjectDoesNotExist:
 
