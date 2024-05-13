@@ -1,6 +1,4 @@
 from rest_framework import status
-
-from .products import products
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
@@ -16,10 +14,6 @@ def getRoutes(request):
     return Response(routes)
 
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def getProducts(request):
-    return Response(products)
 
 
 @api_view(['GET'])
@@ -83,11 +77,4 @@ def delUser(request, pk):
         return Response(e, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-@api_view(['GET'])
-def getProductsById(request, pk):
-    product = None
-    for i in products:
-        if i['_id'] == pk:
-            product = i
-            break
-    return Response(product)
+
