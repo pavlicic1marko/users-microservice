@@ -8,6 +8,7 @@ urlpatterns = [
     path('products', views_crud_users.getProducts, name='products'),
     path('products/<str:pk>', views_crud_users.getProductsById, name='products'),
     path('users/profile', views_crud_users.getUserProfile, name='user-profile'),
+    path('users/profile/update', views_crud_users.updateUserProfile, name='user-profile-update'),
     path('users', views_crud_users.getUsers, name='users'),
     path('users/register', views_jwt.registerUser, name='register'),
     path('comms', views_crud_users.comms, name='comms'),
