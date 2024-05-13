@@ -10,7 +10,6 @@ import requests
 import django.core.exceptions
 
 
-
 @api_view(['GET'])
 def getRoutes(request):
     routes = ['api/products', 'api/products/<id>']
@@ -22,18 +21,23 @@ def getRoutes(request):
 def getProducts(request):
     return Response(products)
 
+
 @api_view(['GET'])
 def comms(request):
+    bearer_token = request.headers['Authorization']
     URL = "http://127.0.0.1:8000/api/test"
+    headers = {'content-type': 'application/json',
+               'Authorization': bearer_token}
 
-    r = requests.get(url=URL)
+    r = requests.get(url=URL, headers=headers)
     data = r.json()
 
     return Response(data)
 
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def updateUserProfile(request): # fpr updating user first_name and email
+def updateUserProfile(request):  # fpr updating user first_name and email
     user = request.user
     serializer = UserSerializerWithToken(user, many=False)
 
@@ -44,6 +48,7 @@ def updateUserProfile(request): # fpr updating user first_name and email
     user.email = data['email']
 
     return Response(serializer.data)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -60,23 +65,22 @@ def getUsers(request):
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
 
+
 @api_view(['DELETE'])
-#@permission_classes([IsAdminUser])
-def delUser(request,pk):
-    username=pk
+# @permission_classes([IsAdminUser])
+def delUser(request, pk):
+    username = pk
     try:
-        user = User.objects.get(username = username)
+        user = User.objects.get(username=username)
         user.delete()
         return Response('user is deleted', status=200)
 
     except django.core.exceptions.ObjectDoesNotExist:
 
-        return Response('user does not exist',status=status.HTTP_404_NOT_FOUND)
+        return Response('user does not exist', status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
 
-        return Response(e,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
+        return Response(e, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 @api_view(['GET'])
