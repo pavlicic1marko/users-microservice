@@ -49,3 +49,26 @@ def registerUser(request):
     except:
         message = {'detail': 'internal server error'}
         return Response(message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['POST'])
+def registerAdminUser(request):
+    data = request.data
+
+    try:
+        user = User.objects.create(
+            first_name=data['name'],
+            username=data['email'],
+            email=data['email'],
+            password=make_password(data['password']),
+            is_staff = 1,
+        )
+        serializer = UserSerializerWithToken(user, many=False)
+        return Response(serializer.data)
+
+    except IntegrityError:
+        message = {'detail': 'user with this eamil exists'}
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+    except:
+        message = {'detail': 'internal server error'}
+        return Response(message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
