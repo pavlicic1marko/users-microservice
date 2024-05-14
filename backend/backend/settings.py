@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.BaseConfig',
     'Todo.apps.TodoConfig',
+    'AI.apps.AiConfig',
     'rest_framework',
 ]
 
