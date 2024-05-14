@@ -17,3 +17,10 @@ def getPropts(request):
     all_prompts = models.Prompt.objects.all()
     prompts = PromptSerializer(all_prompts, many=True)
     return Response(prompts.data)
+
+ #    order = Order.objects.get(_id=pk)
+@api_view(['GET'])
+def getPromptsById(request, pk):
+    all_prompts = models.Prompt.objects.filter(user_id=pk)
+    prompts = PromptSerializer(all_prompts, many=True)
+    return Response(prompts.data)
