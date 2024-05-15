@@ -2,3 +2,5 @@
 
 /backend/db.sqlite3
 /backend/AI/migrations/0001_initial.py
+/backend/db.sqlite-ai3
+/backend/db-app1.sqlite3

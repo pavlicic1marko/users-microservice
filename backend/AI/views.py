@@ -24,7 +24,7 @@ def getPropts(request):
  #    order = Order.objects.get(_id=pk)
 @api_view(['GET'])
 def getPromptsByUserId(request, pk):
-    all_prompts = models.Prompt.objects.filter(user_id=pk)
+    all_prompts = models.Prompt.objects.using('db_app1').filter(user_id=pk)
     prompts = PromptSerializer(all_prompts, many=True)
     return Response(prompts.data)
 
@@ -41,7 +41,7 @@ def answerPrompt(request):
 
     API_call = 'test anwer'
 
-    models.Prompt.objects.create(
+    models.Prompt.objects.using('db_app1').create(
         user_id=use_id,
         prompt=prompt,
         answer='answer',
