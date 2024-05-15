@@ -8,6 +8,7 @@ from .serializer import UserSerializerWithToken
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
+from .constants.error_messages import USER_WITH_EMAIL_EXISTS, SERVER_ERROR
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -43,11 +44,11 @@ def registerUser(request):
         return Response(serializer.data)
 
     except IntegrityError:
-        message = {'detail': 'user with this eamil exists'}
+        message = {'detail': USER_WITH_EMAIL_EXISTS}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
     except:
-        message = {'detail': 'internal server error'}
+        message = {'detail': SERVER_ERROR}
         return Response(message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['POST'])
@@ -66,9 +67,9 @@ def registerAdminUser(request):
         return Response(serializer.data)
 
     except IntegrityError:
-        message = {'detail': 'user with this eamil exists'}
+        message = {'detail': USER_WITH_EMAIL_EXISTS}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
     except:
-        message = {'detail': 'internal server error'}
+        message = {'detail': SERVER_ERROR}
         return Response(message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
