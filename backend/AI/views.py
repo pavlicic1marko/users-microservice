@@ -24,3 +24,17 @@ def getPromptsById(request, pk):
     all_prompts = models.Prompt.objects.filter(user_id=pk)
     prompts = PromptSerializer(all_prompts, many=True)
     return Response(prompts.data)
+
+@api_view(['GET'])
+def answerPrompt(request):
+    data = request.data
+    prompt = data['prompt']
+
+    models.Prompt.objects.create(
+        user_id=3,
+        prompt=prompt,
+        answer='answer',
+    )
+    # TODO  get user id from token, crete random text genrator or API call
+
+    return Response('test')
