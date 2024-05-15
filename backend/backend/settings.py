@@ -83,7 +83,6 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASE_ROUTERS = ["AI.dbRouter.App1DBRouter"]
 
 DATABASES = {
     'default': {
@@ -91,10 +90,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     },
 
-    'db_app1': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db-app1.sqlite3',
-    }
 }
 
 
