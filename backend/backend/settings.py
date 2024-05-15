@@ -41,12 +41,15 @@ INSTALLED_APPS = [
     'Todo.apps.TodoConfig',
     'AI.apps.AiConfig',
     'rest_framework',
+    'corsheaders',
+
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
 
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -80,10 +83,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+DATABASE_ROUTERS = ["AI.dbRouter.App1DBRouter"]
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+
+    'db_app1': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db-app1.sqlite3',
     }
 }
 
