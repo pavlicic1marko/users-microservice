@@ -41,12 +41,15 @@ INSTALLED_APPS = [
     'Todo.apps.TodoConfig',
     'AI.apps.AiConfig',
     'rest_framework',
+    'corsheaders',
+
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
 
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -80,11 +83,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+
 }
 
 
@@ -145,7 +150,7 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": False,
 
     "ALGORITHM": "HS256",
-    # "SIGNING_KEY": settings.SECRET_KEY,
+    "SIGNING_KEY": "1234567890ABCDEFG",
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
     "ISSUER": None,
