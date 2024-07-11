@@ -1,6 +1,7 @@
 from django.db.utils import IntegrityError
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -73,3 +74,15 @@ def registerAdminUser(request):
     except:
         message = {'detail': SERVER_ERROR}
         return Response(message, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def uploadImage(request):
+    data = request.data
+
+    first_name = data['image']
+    type_name =type(first_name)
+
+
+    return Response(str(type_name))
