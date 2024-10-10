@@ -1,3 +1,4 @@
+import jwt
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -6,6 +7,8 @@ from .serializer import UserSerializer, UserSerializerWithToken
 from django.contrib.auth.models import User
 import requests
 import django.core.exceptions
+from django.conf import settings
+
 
 
 @api_view(['GET'])
@@ -19,7 +22,7 @@ def getRoutes(request):
 @api_view(['GET'])
 def comms(request):
     bearer_token = request.headers['Authorization']
-    URL = "http://127.0.0.1:8000/api/test"
+    URL = "http://127.0.0.1:8001/api/routes"
     headers = {'content-type': 'application/json',
                'Authorization': bearer_token}
 
@@ -31,15 +34,17 @@ def comms(request):
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def updateUserProfile(request):  # fpr updating user first_name and email
+def updateUserProfile(request):  #  updating user first_name and email
+
+
     user = request.user
     serializer = UserSerializerWithToken(user, many=False)
 
     data = request.data
-
     user.first_name = data['name']
     user.username = data['email']
     user.email = data['email']
+    user.save()  # save user to database
 
     return Response(serializer.data)
 
